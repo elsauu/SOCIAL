@@ -11,6 +11,7 @@ import {
 	useColorModeValue,
 } from "@chakra-ui/react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { Link } from "react-router-dom";
 import userAtom from "../atoms/userAtom";
 import { BsCheck2All, BsFillImageFill } from "react-icons/bs";
 import { selectedConversationAtom } from "../atoms/messagesAtom";
@@ -22,7 +23,6 @@ const Conversation = ({ conversation, isOnline }) => {
 	const [selectedConversation, setSelectedConversation] = useRecoilState(selectedConversationAtom);
 	const colorMode = useColorMode();
 
-	console.log("selectedConverstion", selectedConversation);
 	return (
 		<Flex
 			gap={4}
@@ -48,22 +48,26 @@ const Conversation = ({ conversation, isOnline }) => {
 			borderRadius={"md"}
 		>
 			<WrapItem>
-				<Avatar
-					size={{
-						base: "xs",
-						sm: "sm",
-						md: "md",
-					}}
-					src={user.profilePic}
-				>
-					{isOnline ? <AvatarBadge boxSize='1em' bg='green.500' /> : ""}
-				</Avatar>
+				<Link to={`/${user.username}`}>
+					<Avatar
+						size={{
+							base: "xs",
+							sm: "sm",
+							md: "md",
+						}}
+						src={user.profilePic}
+					>
+						{isOnline ? <AvatarBadge boxSize='1em' bg='green.500' /> : ""}
+					</Avatar>
+				</Link>
 			</WrapItem>
 
 			<Stack direction={"column"} fontSize={"sm"}>
-				<Text fontWeight='700' display={"flex"} alignItems={"center"}>
-					{user.username} 
-				</Text>
+				<Link to={`/${user.username}`}>
+					<Text fontWeight='700' display={"flex"} alignItems={"center"}>
+						{user.username} 
+					</Text>
+				</Link>
 				<Text fontSize={"xs"} display={"flex"} alignItems={"center"} gap={1}>
 					{currentUser._id === lastMessage.sender ? (
 						<Box color={lastMessage.seen ? "blue.400" : ""}>
