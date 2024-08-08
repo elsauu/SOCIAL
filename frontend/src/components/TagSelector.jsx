@@ -1,39 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { Box, Tag, TagLabel, TagCloseButton } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const TagSelector = ({ selectedTags, setSelectedTags }) => {
-    const [tags, setTags] = useState([]);
+    const [allTags, setAllTags] = useState([]);
 
     useEffect(() => {
         const fetchTags = async () => {
-            const response = await axios.get('/api/tags');
-            setTags(response.data);
+            const response = await axios.get("/api/tags");
+            setAllTags(response.data);
         };
         fetchTags();
     }, []);
 
-    const handleTagChange = (tag) => {
-        if (selectedTags.includes(tag)) {
-            setSelectedTags(selectedTags.filter(t => t !== tag));
+    const toggleTag = (tagName) => {
+        if (selectedTags.includes(tagName)) {
+            setSelectedTags(selectedTags.filter(tag => tag !== tagName));
         } else {
-            setSelectedTags([...selectedTags, tag]);
+            setSelectedTags([...selectedTags, tagName]);
         }
     };
 
     return (
-        <div>
-            {tags.map(tag => (
-                <label key={tag._id}>
-                    <input
-                        type="checkbox"
-                        value={tag.name}
-                        checked={selectedTags.includes(tag.name)}
-                        onChange={() => handleTagChange(tag.name)}
-                    />
-                    {tag.name}
-                </label>
+        <Box>
+            {allTags.map((tag) => (
+                <Tag
+                    size="md"
+                    key={tag._id}
+                    borderRadius="full"
+                    variant={selectedTags.includes(tag.name) ? "solid" : "outline"}
+                    colorScheme="blue"
+                    m={1}
+                    onClick={() => toggleTag(tag.name)}
+                    cursor="pointer"
+                >
+                    <TagLabel>{tag.name}</TagLabel>
+                    {selectedTags.includes(tag.name) && <TagCloseButton onClick={() => toggleTag(tag.name)} />}
+                </Tag>
             ))}
-        </div>
+        </Box>
     );
 };
 

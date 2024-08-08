@@ -168,4 +168,20 @@ const getUserPosts = async (req, res) => {
 	}
 };
 
-export { createPost, getPost, deletePost, likeUnlikePost, replyToPost, getFeedPosts, getUserPosts };
+const getFilteredPosts = async (req, res) => {
+    try {
+        const { filterCriteria } = req.query; // Supongamos que los criterios de filtrado se pasan como query parameters
+        
+        // Realiza la lógica de filtrado basada en los criterios
+        const posts = await Post.find({ /* aquí irían las condiciones de filtrado */ });
+
+        res.status(200).json(posts);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+        console.log("Error in getFilteredPosts: ", err.message);
+    }
+};
+
+
+
+export { createPost, getPost, deletePost, likeUnlikePost, replyToPost, getFeedPosts, getUserPosts, getFilteredPosts, };
