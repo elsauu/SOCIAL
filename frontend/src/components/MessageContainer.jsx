@@ -1,4 +1,5 @@
 import { Avatar, Divider, Flex, Image, Skeleton, SkeletonCircle, Text, useColorModeValue } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import { useEffect, useRef, useState } from "react";
@@ -8,6 +9,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { useSocket } from "../context/SocketContext.jsx";
 import messageSound from "../assets/sounds/message.mp3";
+
 const MessageContainer = () => {
 	const showToast = useShowToast();
 	const selectedConversation = useRecoilValue(selectedConversationAtom);
@@ -24,7 +26,6 @@ const MessageContainer = () => {
 				setMessages((prev) => [...prev, message]);
 			}
 
-			// make a sound if the window is not focused
 			if (!document.hasFocus()) {
 				const sound = new Audio(messageSound);
 				sound.play();
@@ -114,10 +115,14 @@ const MessageContainer = () => {
 		>
 			{/* Message header */}
 			<Flex w={"full"} h={12} alignItems={"center"} gap={2}>
-				<Avatar src={selectedConversation.userProfilePic} size={"sm"} />
-				<Text display={"flex"} alignItems={"center"}>
-					{selectedConversation.username}
-				</Text>
+				<Link to={`/${selectedConversation.username}`}>
+					<Avatar src={selectedConversation.userProfilePic} size={"sm"} />
+				</Link>
+				<Link to={`/${selectedConversation.username}`}>
+					<Text display={"flex"} alignItems={"center"}>
+						{selectedConversation.username}
+					</Text>
+				</Link>
 			</Flex>
 
 			<Divider />
@@ -137,25 +142,29 @@ const MessageContainer = () => {
 							<Flex flexDir={"column"} gap={2}>
 								<Skeleton h='8px' w='250px' />
 								<Skeleton h='8px' w='250px' />
-								<Skeleton h='8px' w='250px' />
+								<Skeleton h='8px' w='100px' />
 							</Flex>
 							{i % 2 !== 0 && <SkeletonCircle size={7} />}
 						</Flex>
 					))}
 
 				{!loadingMessages &&
-					messages.map((message) => (
-						<Flex
+					messages.length > 0 &&
+					messages.map((message, i) => (
+						<Message
 							key={message._id}
-							direction={"column"}
-							ref={messages.length - 1 === messages.indexOf(message) ? messageEndRef : null}
-						>
-							<Message message={message} ownMessage={currentUser._id === message.sender} />
-						</Flex>
+							message={message}
+							position={message.sender === currentUser._id ? "right" : "left"}
+						/>
 					))}
+
+				{!loadingMessages && messages.length === 0 && <Text>No messages yet.</Text>}
+
+				{/* Empty div to maintain auto-scroll */}
+				<div ref={messageEndRef} />
 			</Flex>
 
-			<MessageInput setMessages={setMessages} />
+			<MessageInput />
 		</Flex>
 	);
 };
