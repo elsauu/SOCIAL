@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Comment from "../components/Comment";
 import useGetUserProfile from "../hooks/useGetUserProfile";
 import useShowToast from "../hooks/useShowToast";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import { useRecoilState, useRecoilValue } from "recoil";
 import userAtom from "../atoms/userAtom";
@@ -73,12 +73,15 @@ const PostPage = () => {
 		<>
 			<Flex>
 				<Flex w={"full"} alignItems={"center"} gap={3}>
-					<Avatar src={user.profilePic} size={"md"} name='Mark Zuckerberg' />
+					<Link to={`/${user.username}`}>
+						<Avatar src={user.profilePic} size={"md"} name='Mark Zuckerberg' />
+					</Link>
 					<Flex>
-						<Text fontSize={"sm"} fontWeight={"bold"}>
-							{user.username}
-						</Text>
-						
+						<Link to={`/${user.username}`}>
+							<Text fontSize={"sm"} fontWeight={"bold"}>
+								{user.username}
+							</Text>
+						</Link>
 					</Flex>
 				</Flex>
 				<Flex gap={4} alignItems={"center"}>
@@ -106,7 +109,6 @@ const PostPage = () => {
 
 			<Divider my={4} />
 
-		
 			{currentPost.replies.map((reply) => (
 				<Comment
 					key={reply._id}
