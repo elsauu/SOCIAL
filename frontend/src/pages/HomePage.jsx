@@ -68,16 +68,7 @@ const HomePage = () => {
             p={4}
         >
             <Box flex={2} w="full" mb={{ base: 4, md: 0 }}>
-                <Flex mb={4} align="center">
-                    <Input
-                        type="text"
-                        placeholder="Search for a hashtag"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        mr={2}
-                    />
-                    <Button onClick={searchPosts}>Search</Button>
-                </Flex>
+                
 
                 {!loading && posts.length === 0 && (
                     <Heading as="h1" size="lg" textAlign="center">
