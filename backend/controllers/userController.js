@@ -239,33 +239,13 @@ const freezeAccount = async (req, res) => {
 	}
 };
 
-const updateUserTags = async (req, res) => {
-    try {
-        const { tags } = req.body; // Suponiendo que las etiquetas se envían en el cuerpo de la solicitud
-        const userId = req.params.id;
-
-        let user = await User.findById(userId);
-        if (!user) return res.status(400).json({ error: "User not found" });
-
-        user.tags = tags; // Actualiza las etiquetas del usuario
-        user = await user.save();
-
-        res.status(200).json(user);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-        console.log("Error in updateUserTags: ", err.message);
-    }
-};
-
 export {
-    signupUser,
-    loginUser,
-    logoutUser,
-    followUnFollowUser,
-    updateUser,
-    getUserProfile,
-    getSuggestedUsers,
-    freezeAccount,
-    updateUserTags, // Asegúrate de exportar la función aquí
+	signupUser,
+	loginUser,
+	logoutUser,
+	followUnFollowUser,
+	updateUser,
+	getUserProfile,
+	getSuggestedUsers,
+	freezeAccount,
 };
-

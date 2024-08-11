@@ -59,13 +59,7 @@ export const SettingsPage = ({ userId }) => {
                 Freeze
             </Button>
 
-            <Text my={1} fontWeight={"bold"}>
-                Update Your Tags
-            </Text>
-            <TagSelector selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
-            <Button size={"sm"} colorScheme='blue' onClick={handleSave}>
-                Save
-            </Button>
+           
         </>
     );
 };

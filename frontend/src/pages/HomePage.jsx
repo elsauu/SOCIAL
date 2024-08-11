@@ -68,13 +68,7 @@ const HomePage = () => {
             p={4}
         >
             <Box flex={2} w="full" mb={{ base: 4, md: 0 }}>
-                <Input
-                    placeholder="Search posts by tags..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    mb={4}
-                />
-                <Button onClick={searchPosts} isLoading={loading}>Search</Button>
+               
 
                 {!loading && posts.length === 0 && (
                     <Heading as="h1" size="lg" textAlign="center">

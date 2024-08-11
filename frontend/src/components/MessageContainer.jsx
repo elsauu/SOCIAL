@@ -9,7 +9,6 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import userAtom from "../atoms/userAtom";
 import { useSocket } from "../context/SocketContext.jsx";
 import messageSound from "../assets/sounds/message.mp3";
-
 const MessageContainer = () => {
 	const showToast = useShowToast();
 	const selectedConversation = useRecoilValue(selectedConversationAtom);
@@ -26,6 +25,7 @@ const MessageContainer = () => {
 				setMessages((prev) => [...prev, message]);
 			}
 
+			// make a sound if the window is not focused
 			if (!document.hasFocus()) {
 				const sound = new Audio(messageSound);
 				sound.play();
@@ -142,29 +142,25 @@ const MessageContainer = () => {
 							<Flex flexDir={"column"} gap={2}>
 								<Skeleton h='8px' w='250px' />
 								<Skeleton h='8px' w='250px' />
-								<Skeleton h='8px' w='100px' />
+								<Skeleton h='8px' w='250px' />
 							</Flex>
 							{i % 2 !== 0 && <SkeletonCircle size={7} />}
 						</Flex>
 					))}
 
 				{!loadingMessages &&
-					messages.length > 0 &&
-					messages.map((message, i) => (
-						<Message
+					messages.map((message) => (
+						<Flex
 							key={message._id}
-							message={message}
-							position={message.sender === currentUser._id ? "right" : "left"}
-						/>
+							direction={"column"}
+							ref={messages.length - 1 === messages.indexOf(message) ? messageEndRef : null}
+						>
+							<Message message={message} ownMessage={currentUser._id === message.sender} />
+						</Flex>
 					))}
-
-				{!loadingMessages && messages.length === 0 && <Text>No messages yet.</Text>}
-
-				{/* Empty div to maintain auto-scroll */}
-				<div ref={messageEndRef} />
 			</Flex>
 
-			<MessageInput />
+			<MessageInput setMessages={setMessages} />
 		</Flex>
 	);
 };
