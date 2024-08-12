@@ -203,11 +203,11 @@ const updateUser = async (req, res) => {
 		console.log("Error in updateUser: ", err.message);
 	}
 };
-
 const getSuggestedUsers = async (req, res) => {
 	try {
 		// exclude the current user from suggested users array and exclude users that current user is already following
 		const userId = req.user._id;
+		const userTags = req.user.selectedTags; // obtener las tags del usuario que tiene iniciada sesión
 
 		const usersFollowedByYou = await User.findById(userId).select("following");
 
@@ -215,6 +215,7 @@ const getSuggestedUsers = async (req, res) => {
 			{
 				$match: {
 					_id: { $ne: userId },
+					selectedTags: { $elemMatch: { $in: userTags } } // filtrar por tags
 				},
 			},
 			{
