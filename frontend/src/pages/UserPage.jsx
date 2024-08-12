@@ -9,6 +9,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import postsAtom from "../atoms/postsAtom";
 import tagsAtom from "../atoms/tagsAtom";
 import useGetUserProfile from "../hooks/useGetUserProfile"; // Asegúrate de importar el hook
+import { useColorMode } from "@chakra-ui/react";
+
 
 const UserPage = () => {
   const { username } = useParams();
@@ -17,7 +19,8 @@ const UserPage = () => {
   const [posts, setPosts] = useRecoilState(postsAtom);
   const [fetchingPosts, setFetchingPosts] = useState(true);
   const selectedTags = user?.selectedTags || [];
-  
+  const { colorMode } = useColorMode();
+
 
   useEffect(() => {
     const getPosts = async () => {
@@ -57,13 +60,22 @@ const UserPage = () => {
         <Heading size="md">Interests</Heading>
         <Flex flexWrap="wrap" mt={2}>
           {selectedTags.length > 0 ? (
-            selectedTags.map(tag => (
-              <Text key={tag} mr={2} bg="gray.200" p={2} borderRadius="md">
+            selectedTags.map((tag) => (
+              <Text
+                key={tag}
+                mr={2}
+                bg={colorMode === "dark" ? "black" : "gray.200"}
+                p={2}
+                borderRadius="md"
+                color={colorMode === "dark" ? "white" : "black"}
+              >
                 {tag}
               </Text>
             ))
           ) : (
-            <Text>No tags selected.</Text>
+            <Text color={colorMode === "dark" ? "white" : "black"}>
+              No tags selected.
+            </Text>
           )}
         </Flex>
       </Box>
