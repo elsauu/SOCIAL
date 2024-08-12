@@ -22,4 +22,5 @@ router.post("/follow/:id", protectRoute, followUnFollowUser); // Toggle state(fo
 router.put("/update/:id", protectRoute, updateUser);
 router.put("/freeze", protectRoute, freezeAccount);
 
+
 export default router;

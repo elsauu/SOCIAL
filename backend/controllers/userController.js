@@ -4,6 +4,8 @@ import bcrypt from "bcryptjs";
 import generateTokenAndSetCookie from "../utils/helpers/generateTokenAndSetCookie.js";
 import { v2 as cloudinary } from "cloudinary";
 import mongoose from "mongoose";
+import express from 'express';
+
 
 const getUserProfile = async (req, res) => {
 	// We will fetch user profile either with username or userId
@@ -139,16 +141,23 @@ const followUnFollowUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-	const { name, email, username, password, bio } = req.body;
+	const { name, email, username, password, bio, selectedTags } = req.body;
 	let { profilePic } = req.body;
+
 
 	const userId = req.user._id;
 	try {
+		console.log("Received data:", req.body);  // Log para depuración
+
 		let user = await User.findById(userId);
 		if (!user) return res.status(400).json({ error: "User not found" });
 
 		if (req.params.id !== userId.toString())
 			return res.status(400).json({ error: "You cannot update other user's profile" });
+
+		if (selectedTags) {
+			user.selectedTags = selectedTags;
+		}
 
 		if (password) {
 			const salt = await bcrypt.genSalt(10);
@@ -170,8 +179,8 @@ const updateUser = async (req, res) => {
 		user.username = username || user.username;
 		user.profilePic = profilePic || user.profilePic;
 		user.bio = bio || user.bio;
-
-		user = await user.save();
+		user.selectedTags = selectedTags;
+		await user.save({ validateBeforeSave: false });
 
 		// Find all posts that this user replied and update username and userProfilePic fields
 		await Post.updateMany(
@@ -238,6 +247,9 @@ const freezeAccount = async (req, res) => {
 		res.status(500).json({ error: error.message });
 	}
 };
+const router = express.Router();
+
+
 
 export {
 	signupUser,
@@ -248,4 +260,5 @@ export {
 	getUserProfile,
 	getSuggestedUsers,
 	freezeAccount,
+	
 };
