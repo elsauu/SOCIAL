@@ -7,7 +7,7 @@ const TagSelector = ({ selectedTags, setSelectedTags }) => {
 
     useEffect(() => {
         const fetchTags = async () => {
-            const response = await axios.get("/api/tags");
+            const response = await axios.get("https://itconnect.ngrok.io/api/tags");
             setAllTags(response.data);
         };
         fetchTags();

@@ -36,7 +36,7 @@ const Actions = ({ post }) => {
 		if (isLiking) return;
 		setIsLiking(true);
 		try {
-			const res = await fetch("/api/posts/like/" + post._id, {
+			const res = await fetch("https://itconnect.ngrok.io/api/posts/like/" + post._id, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -78,7 +78,7 @@ const Actions = ({ post }) => {
 		if (isReplying) return;
 		setIsReplying(true);
 		try {
-			const res = await fetch("/api/posts/reply/" + post._id, {
+			const res = await fetch("https://itconnect.ngrok.io/api/posts/reply/" + post._id, {
 				method: "PUT",
 				headers: {
 					"Content-Type": "application/json",
@@ -145,8 +145,7 @@ const Actions = ({ post }) => {
 					></path>
 				</svg>
 
-				<RepostSVG />
-				<ShareSVG />
+				
 			</Flex>
 
 			<Flex gap={2} alignItems={"center"}>

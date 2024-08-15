@@ -12,7 +12,7 @@ export const SettingsPage = ({ userId }) => {
 
     useEffect(() => {
         const fetchUserTags = async () => {
-            const response = await axios.get(`/api/users/${userId}`);
+            const response = await axios.get(`https://itconnect.ngrok.io/api/users/${userId}`);
             setSelectedTags(response.data.tags.map(tag => tag.name));
         };
         fetchUserTags();
@@ -20,7 +20,7 @@ export const SettingsPage = ({ userId }) => {
 
     const handleSave = async () => {
         try {
-            await axios.put(`/api/users/updateTags/${userId}`, { tags: selectedTags });
+            await axios.put(`https://itconnect.ngrok.io/api/users/updateTags/${userId}`, { tags: selectedTags });
             showToast("Success", "Tags updated successfully", "success");
         } catch (error) {
             showToast("Error", error.message, "error");
@@ -31,7 +31,7 @@ export const SettingsPage = ({ userId }) => {
         if (!window.confirm("Are you sure you want to freeze your account?")) return;
 
         try {
-            const res = await fetch("/api/users/freeze", {
+            const res = await fetch("https://itconnect.ngrok.io/api/users/freeze", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
             });

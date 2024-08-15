@@ -52,7 +52,7 @@ import {
 		console.log('updatedInputs:', updatedInputs);
 		// ...
 		try {
-		  const res = await fetch(`/api/users/update/${user._id}`, {
+		  const res = await fetch(`https://itconnect.ngrok.io/api/users/update/${user._id}`, {
 			method: "PUT",
 			headers: {
 			  "Content-Type": "application/json",
@@ -162,12 +162,24 @@ import {
   <FormLabel>Tags</FormLabel>
   <CheckboxGroup value={selectedTags} onChange={handleTagChange}>
     <Stack direction={"column"}>
-      <Checkbox value="Tecnología">Tecnología</Checkbox>
-      <Checkbox value="Música">Música</Checkbox>
-      <Checkbox value="Deportes">Deportes</Checkbox>
-      <Checkbox value="Literatura">Literatura</Checkbox>
-      <Checkbox value="Arte">Arte</Checkbox>
-      <Checkbox value="Viajes">Viajes</Checkbox>
+      <Checkbox value="Java">Java</Checkbox>
+      <Checkbox value="HTML">HTML</Checkbox>
+      <Checkbox value="CSS">CSS</Checkbox>
+      <Checkbox value="Python">Python</Checkbox>
+      <Checkbox value="Minecraft">Minecraft</Checkbox>
+      <Checkbox value="Vehicles">Vehicles</Checkbox>
+	  <Checkbox value="Music">Music</Checkbox>
+	  <Checkbox value="IT">IT</Checkbox>
+	  <Checkbox value="iOS">iOS</Checkbox>
+	  <Checkbox value="Android">Android</Checkbox>
+	  <Checkbox value="Football">Football</Checkbox>
+	  <Checkbox value="Messi">Messi</Checkbox>
+	  <Checkbox value="Ronaldo">Ronaldo</Checkbox>
+	  <Checkbox value="Make Up">Make Up</Checkbox>
+	  <Checkbox value="Hello Kitty">Hello Kitty</Checkbox>
+
+	  
+
     </Stack>
   </CheckboxGroup>
 </FormControl>

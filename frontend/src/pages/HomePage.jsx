@@ -16,7 +16,7 @@ const HomePage = () => {
         setLoading(true);
         setPosts([]);
         try {
-            const res = await fetch("/api/posts/feed");
+            const res = await fetch("https://itconnect.ngrok.io/api/posts/feed");
             const data = await res.json();
 
             if (!res.ok || !Array.isArray(data)) {
@@ -43,7 +43,7 @@ const HomePage = () => {
         setLoading(true);
         setPosts([]);
         try {
-            const res = await fetch(`/api/posts/search/${searchQuery}`);
+            const res = await fetch(`https://itconnect.ngrok.io/api/posts/search/${searchQuery}`);
             const data = await res.json();
 
             if (!res.ok || !Array.isArray(data)) {

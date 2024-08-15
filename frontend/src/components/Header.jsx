@@ -31,7 +31,7 @@ const Header = () => {
         e.preventDefault();
         setSearchingUser(true);
         try {
-            const res = await fetch(`/api/users/profile/${searchQuery}`);
+            const res = await fetch(`https://itconnect.ngrok.io/api/users/profile/${searchQuery}`);
             const searchedUser = await res.json();
             if (searchedUser.error) {
                 showToast("Error", searchedUser.error, "error");
