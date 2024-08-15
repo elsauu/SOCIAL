@@ -43,7 +43,7 @@ const ChatPage = () => {
 	useEffect(() => {
 		const getConversations = async () => {
 			try {
-				const res = await fetch("https://itconnect.ngrok.io/api/messages/conversations");
+				const res = await fetch("/api/messages/conversations");
 				const data = await res.json();
 				if (data.error) {
 					showToast("Error", data.error, "error");

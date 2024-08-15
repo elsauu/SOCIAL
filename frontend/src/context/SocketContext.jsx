@@ -15,7 +15,7 @@ export const SocketContextProvider = ({ children }) => {
 	const user = useRecoilValue(userAtom);
 
 	useEffect(() => {
-		const socket = io("https://itconnect.ngrok.io/", {
+		const socket = io("https://itconnect.ngrok.io", {
 			query: {
 				userId: user?._id,
 			},
